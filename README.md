@@ -17,7 +17,7 @@
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/your-repo/vue3-element-plus-tailwind-template.git
+git clone https://github.com/cfping/vue3-element-plus-template.git
 cd vue3-element-plus-tailwind-template
 ```
 
