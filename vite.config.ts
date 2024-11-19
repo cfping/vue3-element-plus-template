@@ -17,10 +17,13 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()], // 自动引入 Element Plus API
+      imports: ["vue", "vue-router"],    // 自动引入 Vue 和 Vue Router 的 API
+      dts: "src/types/auto-imports.d.ts",      // 生成类型声明文件
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()], // 自动按需注册 Element Plus 组件
+      dts: "src/types/components.d.ts",         // 生成类型声明文件
     }),
     vueJsx(),
     vueDevTools(),
