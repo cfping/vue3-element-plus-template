@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* 打印样式 */
+.receipt {
+  min-height: 100vh;
+}
+
+.w-receipt {
+  max-width: 80mm; /* 限制打印宽度为80mm */
+  margin: 0 auto;
+}
+
+/* 打印样式 */
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+
+  /* 隐藏页面中其他内容 */
+  body * {
+    visibility: hidden;
+  }
+
+  .receipt,
+  .receipt * {
+    visibility: visible;
+  }
+
+  .receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm;
+  }
+
+  .w-receipt {
+    box-shadow: none;
+    border: none;
+  }
+}
