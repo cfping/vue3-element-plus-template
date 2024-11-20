@@ -10,6 +10,7 @@ const locale = computed(() => (language.value === 'zh-cn' ? zhCn : En)); // 根�
 window.addEventListener(
   'switchLanguage',
   (evt: Event) => {
+    console.log("语言切换",evt)
     const customEvent = evt as CustomEvent; // 类型断言为 CustomEvent
     if (customEvent.detail?.language) {
       language.value = customEvent.detail.language; // 更新语言

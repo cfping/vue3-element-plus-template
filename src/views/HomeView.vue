@@ -25,11 +25,18 @@
     :footerMessages="['感谢您的惠顾', '请保管好小票用于退换货凭证', '欢迎再次光临']"
     barcode="2024030800001"
   />
+  <ElButton @click="handlerChangeLocale">
+
+  </ElButton>
 </template>
 
 <script setup lang="ts">
 import ReceiptComponent from "@/components/Receipt.vue";
+import { dispatch } from "@/utils/dispatchLocale";
 const ff = ref(15);
+const handlerChangeLocale=()=>{
+  dispatch('en');
+}
 </script>
 
 <style scoped>
