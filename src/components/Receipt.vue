@@ -1,5 +1,8 @@
 <template>
-  <div class="receipt bg-gray-100 flex justify-center items-start min-h-screen py-8">
+  <div
+    ref="printContent"
+    class="receipt bg-gray-100 flex justify-center items-start min-h-screen py-8"
+  >
     <div class="w-receipt bg-white p-4 shadow-lg">
       <!-- 商店信息 -->
       <div class="text-center mb-6">
@@ -32,11 +35,7 @@
           <div class="col-span-2 text-right">单价</div>
           <div class="col-span-3 text-right">小计</div>
         </div>
-        <div
-          v-for="(product, index) in products"
-          :key="index"
-          class="text-xs grid grid-cols-12"
-        >
+        <div v-for="(product, index) in products" :key="index" class="text-xs grid grid-cols-12">
           <div class="col-span-5">{{ product.name }}</div>
           <div class="col-span-2 text-center">{{ product.quantity }}</div>
           <div class="col-span-2 text-right">{{ product.price.toFixed(2) }}</div>
@@ -95,9 +94,9 @@ defineProps({
     type: Object,
     required: true,
     default: () => ({
-      orderId: "",
-      date: "",
-      cashier: "",
+      orderId: '',
+      date: '',
+      cashier: '',
     }),
   },
   products: {
@@ -118,8 +117,8 @@ defineProps({
     type: Object,
     required: true,
     default: () => ({
-      method: "",
-      time: "",
+      method: '',
+      time: '',
     }),
   },
   footerMessages: {
@@ -130,9 +129,72 @@ defineProps({
   barcode: {
     type: String,
     required: true,
-    default: "",
+    default: '',
   },
-});
+})
+const printContent = ref(null)
+const printDocument = () => {
+  const printWindow = window.open('', '_blank')
+  if (printContent.value) {
+    if (printWindow) {
+      printWindow?.document.write(`
+    <html>
+          <head>
+     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<title>打印订单</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.print-container {
+  width: 48mm;
+  padding: 5mm;
+  box-sizing: border-box;
+}
+
+hr {
+  border: none;
+  border-top: 1px dashed #000;
+}
+      @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .print-container {
+        width: 48mm; /* 设置为纸张的打印宽度 */
+        font-size: 12px; /* 控制字体大小 */
+        line-height: 1.5;
+        padding: 5mm; /* 内边距调整 */
+        box-sizing: border-box;
+      }
+      /* 隐藏网页元素 */
+      .no-print {
+        display: none;
+      }
+      /* 防止分页断开重要内容 */
+      .avoid-break {
+        page-break-inside: avoid;
+      }
+    }
+</style>
+</head>
+
+<body>${printContent.value.outerHTML}</body>
+
+</html>`)
+      printWindow?.document.close()
+      printWindow?.focus()
+      printWindow?.print()
+      printWindow?.close()
+    }
+  }
+}
+defineExpose({ printDocument })
 </script>
 
 <style lang="scss" scoped>

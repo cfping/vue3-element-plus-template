@@ -1,6 +1,6 @@
 <template>
   <ReceiptComponent
-   v-for="x in ff" v-bind:key="x"
+    ref="printOrder"
     storeName="优品商店"
     phone="123-4567-8900"
     address="深圳市南山区科技园"
@@ -25,17 +25,21 @@
     :footerMessages="['感谢您的惠顾', '请保管好小票用于退换货凭证', '欢迎再次光临']"
     barcode="2024030800001"
   />
-  <ElButton @click="handlerChangeLocale">
-
-  </ElButton>
+  <button @click="handlePrint">打印订单</button>
 </template>
 
 <script setup lang="ts">
 import ReceiptComponent from "@/components/Receipt.vue";
-import { dispatch } from "@/utils/dispatchLocale";
-const ff = ref(15);
-const handlerChangeLocale=()=>{
-  dispatch('en');
+// import { dispatch } from "@/utils/dispatchLocale";
+const printOrder = ref();
+// const handlerChangeLocale=()=>{
+//   dispatch('en');
+// }
+const handlePrint =()=>{
+  if(printOrder){
+    printOrder.value.printDocument();// 调用打印组件的方法
+  }
+
 }
 </script>
 
